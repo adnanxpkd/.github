@@ -10,6 +10,16 @@
 </div>
 
 <p align="center">
+
+<!-- Custom SVGs added -->
+<svg width="400" height="110">
+  <text x="0" y="50" font-size="30" fill="purple">Hello, I'm Adnan!</text>
+</svg>
+
+<svg height="100" width="100">
+  <circle cx="50" cy="50" r="40" stroke="blue" stroke-width="3" fill="cyan" />
+</svg>
+
 <img src="https://github-stats-alpha.vercel.app/api/?username=adnanxpkd&cc=000&tc=00ff00&ic=fff000&bc=fff" align="center">
 </p>
 
