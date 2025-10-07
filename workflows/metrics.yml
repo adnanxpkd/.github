@@ -1,0 +1,63 @@
+name: Welcome New Contributors
+on:
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: 'Thanks for opening your first issue 🎉'
+          pr-message: 'Thanks for your first PR 🚀'
+
+
+          name: Organization Metrics
+
+on:
+  schedule:
+    # Run every hour
+    - cron: "0 * * * *"
+  push:
+    branches:
+      - main
+
+jobs:
+  metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # required to update repo files
+
+    steps:
+      # 1️⃣ Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2️⃣ Generate organization metrics
+      - name: Generate Organization Metrics
+        uses: lowlighter/metrics@latest
+        with:
+          filename: intro.svg
+          token: ${{ secrets.METRICS_TOKEN_ORG }}  # GitHub token with org access
+          user: adnanxpkd
+          base: header, activity, repositories
+          template: classic
+          plugin_languages: true
+          plugin_languages_colors: "typescript:#8173ff,python:#3572A5,javascript:#f1e05a,html:#e34c26,css:#563d7c"
+          plugin_languages_limit: 8
+          config_timezone: Asia/Calcutta
+          plugin_traffic: true
+          plugin_followers: true        # optional: show followers
+          plugin_stars: true            # optional: show stars
+          plugin_commits: true          # optional: show commits
+
+      # 3️⃣ Commit & push updated SVG
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add intro.svg
+          git commit -m "Update organization metrics [skip ci]" || echo "No changes to commit"
+          git push
